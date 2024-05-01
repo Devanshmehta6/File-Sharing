@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sharing App</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <h1>File Sharing App</h1>
+    <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="file" id="fileInput">
+        <button type="submit">Upload</button>
+    </form>
+    <h2>Uploaded Files:</h2>
+    <ul id="fileList">
+        {% for file in files %}
+            <li><a href="{% url 'download_file' file.id %}">{{ file.file.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
